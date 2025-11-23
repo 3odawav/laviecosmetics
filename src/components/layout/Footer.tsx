@@ -24,8 +24,8 @@ export default function Footer() {
     (e.target as HTMLFormElement).reset();
   };
 
-  const goldLogo = "https://i.ibb.co/jFM0BXS/Untitled-design-2.png";
-  const whiteLogo = "https://i.ibb.co/bnrr18f/Lavie-1080-x-1080-px-1080-x-360-px.png";
+  const goldLogo = "https://i.ibb.co/xSkmkymJ/9-1.png";
+  const whiteLogo = "https://i.ibb.co/xSkmkymJ/9-1.png";
   const logoSrc = theme === 'dark' ? goldLogo : whiteLogo;
 
   const paymentMethods = [
@@ -51,8 +51,8 @@ export default function Footer() {
                 <Image 
                     src={logoSrc}
                     alt="LAVIE COSMETICS" 
-                    width={150} 
-                    height={50} 
+                    width={60} 
+                    height={60} 
                 />
             </Link>
             <p className="leading-relaxed text-gray-400">
