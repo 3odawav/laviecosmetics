@@ -1,3 +1,4 @@
+
 'use client';
 
 import { FormEvent, useEffect, useState } from 'react';
@@ -53,16 +54,16 @@ export default function LavieAIScrollWidget() {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="group relative flex items-center justify-center w-24 h-24 bg-brand-pink dark:bg-brand-gold rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
+          className="group relative flex items-center justify-center w-28 h-28 bg-brand-pink dark:bg-brand-gold rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
           style={{ transform: `translateY(-${translateY}px)` }}
           aria-label="Open AI Chat"
         >
-          <div className="absolute -top-5 -left-5 w-32 h-32">
+          <div className="absolute -top-5 -left-5 w-40 h-40">
             <Image
               src="https://i.ibb.co/xSkmkymJ/9-1.png"
               alt="LAVIE AI"
-              width={128}
-              height={128}
+              width={160}
+              height={160}
               className="transform group-hover:rotate-12 transition-transform duration-300"
             />
             <span
@@ -213,5 +214,4 @@ export default function LavieAIScrollWidget() {
     </>
   );
 }
-
     
