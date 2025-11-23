@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState } from 'react';
@@ -153,42 +154,8 @@ export default function CheckoutPaymentPage() {
 
       {/* Right Column - Image & Order Summary */}
       <div className="hidden lg:block relative">
-        <div className="sticky top-0 h-screen flex flex-col p-12">
-            <div className="bg-white/80 dark:bg-black/80 backdrop-blur-lg rounded-lg shadow-2xl p-8 w-full max-w-md text-gray-800 dark:text-gray-200 mb-8">
-                <h3 className="text-2xl font-serif font-bold mb-6 text-brand-pink dark:text-brand-gold">Order Summary</h3>
-                <div className="space-y-4">
-                    {/* Mock Cart Item */}
-                    <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-4">
-                            <div className="relative w-16 h-16 rounded-md overflow-hidden border border-gray-200 dark:border-zinc-700">
-                                <Image src="https://cdn.shopify.com/s/files/1/0692/8406/9466/files/1_7e86b146-b991-4254-9c17-4c3077a9aed1.png?v=1763373574" alt="Hair Mask" fill className="object-contain" />
-                            </div>
-                            <div>
-                                <p className="font-semibold">Brazilian Hair Mask</p>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">Qty: 1</p>
-                            </div>
-                        </div>
-                        <p className="font-semibold">600.00 EGP</p>
-                    </div>
-                     <Separator className="dark:bg-zinc-700" />
-                     <div className="space-y-2">
-                         <div className="flex justify-between">
-                            <span>Subtotal</span>
-                            <span>600.00 EGP</span>
-                         </div>
-                          <div className="flex justify-between">
-                            <span>Shipping</span>
-                            <span>50.00 EGP</span>
-                         </div>
-                         <Separator className="dark:bg-zinc-700" />
-                          <div className="flex justify-between font-bold text-lg">
-                            <span>Total</span>
-                            <span className="text-brand-pink dark:text-brand-gold">650.00 EGP</span>
-                         </div>
-                     </div>
-                </div>
-            </div>
-            <div className="flex-grow relative rounded-lg overflow-hidden">
+        <div className="sticky top-0 h-screen flex flex-col">
+             <div className="absolute inset-0">
                  <Image
                     src="https://i.ibb.co/zVzkJRF/20251123-1819-Floral-Botanical-Pattern-remix-01karr10khe52begq14j0fgbmq.png"
                     alt="Floral Pattern"
@@ -196,8 +163,46 @@ export default function CheckoutPaymentPage() {
                     className="object-cover"
                 />
             </div>
+            <div className="relative z-10 flex flex-col items-center justify-center flex-grow p-12">
+                <div className="bg-white/80 dark:bg-black/80 backdrop-blur-lg rounded-lg shadow-2xl p-8 w-full max-w-md text-gray-800 dark:text-gray-200">
+                    <h3 className="text-2xl font-serif font-bold mb-6 text-brand-pink dark:text-brand-gold">Order Summary</h3>
+                    <div className="space-y-4">
+                        {/* Mock Cart Item */}
+                        <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-4">
+                                <div className="relative w-16 h-16 rounded-md overflow-hidden border border-gray-200 dark:border-zinc-700">
+                                    <Image src="https://cdn.shopify.com/s/files/1/0692/8406/9466/files/1_7e86b146-b991-4254-9c17-4c3077a9aed1.png?v=1763373574" alt="Hair Mask" fill className="object-contain" />
+                                </div>
+                                <div>
+                                    <p className="font-semibold">Brazilian Hair Mask</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Qty: 1</p>
+                                </div>
+                            </div>
+                            <p className="font-semibold">600.00 EGP</p>
+                        </div>
+                         <Separator className="dark:bg-zinc-700" />
+                         <div className="space-y-2">
+                             <div className="flex justify-between">
+                                <span>Subtotal</span>
+                                <span>600.00 EGP</span>
+                             </div>
+                              <div className="flex justify-between">
+                                <span>Shipping</span>
+                                <span>50.00 EGP</span>
+                             </div>
+                             <Separator className="dark:bg-zinc-700" />
+                              <div className="flex justify-between font-bold text-lg">
+                                <span>Total</span>
+                                <span className="text-brand-pink dark:text-brand-gold">650.00 EGP</span>
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
         </div>
       </div>
     </div>
   );
 }
+
+    
