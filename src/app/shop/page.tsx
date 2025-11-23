@@ -1,26 +1,61 @@
 
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { PRODUCTS } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Product } from '@/lib/types';
-import Link from 'next/link';
+import { getAllProducts } from '@/lib/shopify';
 
 export default function ShopPage() {
   const router = useRouter();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const fetchedProducts = await getAllProducts();
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
-    // The AnimatePresence and motion components will handle the visual transition.
-    // We navigate after the animation.
     setTimeout(() => {
-      router.push(`/shop/${product.id}`);
-    }, 1200); // Duration should match animation
+      if (product.handle) {
+        router.push(`/shop/${product.handle}`);
+      }
+    }, 1200);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-black pt-20">
+        <div className="container mx-auto px-4 md:px-8 py-12">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="group flex flex-col">
+                  <div className="relative aspect-[3/4] w-full bg-zinc-100 dark:bg-zinc-900 rounded-sm animate-pulse"></div>
+                  <div className="text-center mt-4">
+                    <div className="h-6 w-3/4 bg-zinc-200 dark:bg-zinc-800 rounded mx-auto animate-pulse"></div>
+                    <div className="h-4 w-1/2 bg-zinc-200 dark:bg-zinc-800 rounded mx-auto mt-2 animate-pulse"></div>
+                  </div>
+                </div>
+              ))}
+           </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white dark:bg-black pt-20">
@@ -43,7 +78,7 @@ export default function ShopPage() {
       {/* Products Grid */}
       <div className="container mx-auto px-4 md:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-          {PRODUCTS.map((product) => {
+          {products.map((product) => {
              const [pTitlePart1, pTitlePart2] = product.title.includes('|')
                 ? product.title.split('|').map(s => s.trim())
                 : [product.title, ''];

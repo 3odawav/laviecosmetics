@@ -1,18 +1,20 @@
+
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { PRODUCTS } from '@/lib/data';
+import { getProductByHandle, getAllProducts } from '@/lib/shopify';
 
-// دي الدالة اللي بتحل مشكلة الـ Build
 export async function generateStaticParams() {
-  return PRODUCTS.map((product) => ({
-    id: product.id,
+  const products = await getAllProducts();
+  
+  return products.map((product) => ({
+    id: product.handle,
   }));
 }
 
-export default function ProductPage({ params }: { params: { id: string } }) {
-  const product = PRODUCTS.find((p) => p.id === params.id);
+export default async function ProductPage({ params }: { params: { id: string } }) {
+  const product = await getProductByHandle(params.id);
 
   if (!product) {
     notFound();
@@ -46,9 +48,12 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                {product.price} EGP
              </div>
 
-             <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed font-light">
-               {product.description}
-             </p>
+             {product.description && (
+                <div 
+                    className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed font-light prose dark:prose-invert"
+                    dangerouslySetInnerHTML={{ __html: product.description }}
+                />
+             )}
              
              <div className="flex gap-4 pt-4">
                 <Link href="/cart" className="flex-1">

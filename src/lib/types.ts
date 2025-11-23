@@ -2,16 +2,12 @@
 export interface Product {
     id: string;
     title: string;
-    handle?: string;
+    handle: string;
     price: number;
-    compareAtPrice?: number | null;
-    rating?: number;
-    reviews?: number;
-    image: string;
-    hoverImage?: string;
-    tags: string[];
     description?: string;
-    benefits?: string[];
+    image: string;
+    images?: string[];
+    tags: string[];
 }
   
 export interface VideoContent {
