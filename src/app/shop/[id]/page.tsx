@@ -1,137 +1,65 @@
-
-'use client';
-import React, { useState } from 'react';
-import { useParams } from 'next/navigation';
-import Image from 'next/image';
-import { PRODUCTS } from '@/lib/data';
+import React from 'react';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Plus, Minus } from 'lucide-react';
-import { motion } from 'framer-motion';
-import type { Product } from '@/lib/types';
+import { PRODUCTS } from '@/lib/data';
 
-export default function ProductDetailPage() {
-  const params = useParams();
-  const productId = params.id as string;
-  const product = PRODUCTS.find((p) => p.id === productId) as Product | undefined;
+// دي الدالة اللي بتحل مشكلة الـ Build
+export async function generateStaticParams() {
+  return PRODUCTS.map((product) => ({
+    id: product.id,
+  }));
+}
 
-  const [quantity, setQuantity] = useState(1);
+export default function ProductPage({ params }: { params: { id: string } }) {
+  const product = PRODUCTS.find((p) => p.id === params.id);
 
   if (!product) {
-    return (
-      <div className="flex items-center justify-center min-h-screen pt-20">
-        <p>Product not found.</p>
-      </div>
-    );
+    notFound();
   }
 
-  const incrementQuantity = () => setQuantity((prev) => prev + 1);
-  const decrementQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
-
-  // A simple function to simulate adding to cart
-  const handleAddToCart = () => {
-    console.log(`Added ${quantity} of ${product.title} to cart.`);
-    // Here you would typically call a context function to update the cart state
-  };
-
-  const [titlePart1, titlePart2] = product.title.includes('|')
-    ? product.title.split('|').map(s => s.trim())
-    : [product.title, ''];
-  
   return (
-    <div className="min-h-screen bg-zinc-900 text-white pt-20 pb-20">
-      <div className="container mx-auto px-4 pt-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-start">
+    <main className="min-h-screen bg-white dark:bg-black py-24 px-4">
+      <div className="container mx-auto max-w-6xl">
+        <Link href="/shop" className="text-sm mb-8 inline-block hover:underline text-gray-600 dark:text-gray-400">
+          ← Back to Shop
+        </Link>
+        
+        <div className="grid md:grid-cols-2 gap-12">
+          {/* صورة المنتج */}
+          <div className="aspect-square bg-gray-50 dark:bg-zinc-900 rounded-3xl overflow-hidden relative border border-gray-100 dark:border-zinc-800">
+             <img 
+               src={product.image} 
+               alt={product.title}
+               className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+             />
+          </div>
           
-          {/* Image Gallery */}
-          <motion.div 
-            layoutId={`product-image-${product.id}`}
-            className="relative aspect-[3/4] w-full bg-zinc-800 rounded-lg overflow-hidden"
-          >
-            <Image
-              src={product.image}
-              alt={product.title}
-              fill
-              className="object-contain"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </motion.div>
+          {/* تفاصيل المنتج */}
+          <div className="flex flex-col justify-center space-y-8">
+             <div>
+               <h2 className="text-brand-pink dark:text-brand-gold text-sm font-bold tracking-widest uppercase mb-2">La Vie Cosmetics</h2>
+               <h1 className="text-4xl md:text-5xl font-bold caveat-heading text-gray-900 dark:text-white">{product.title}</h1>
+             </div>
 
-          {/* Product Info */}
-          <div className="flex flex-col gap-6">
-            <div>
-                {product.tags && product.tags.length > 0 && (
-                    <span className="text-sm uppercase tracking-widest text-gray-300 font-bold mb-2 block">{product.tags.join(', ')}</span>
-                )}
-              
-               <h1 className="text-5xl md:text-6xl font-bold caveat-heading leading-tight">
-                {titlePart1}
-              </h1>
-              {titlePart2 && (
-                <h2 className="text-3xl font-serif text-white mt-4">
-                  {titlePart2}
-                </h2>
-              )}
+             <div className="text-3xl font-bold text-gray-900 dark:text-white font-comfortaa">
+               {product.price} EGP
+             </div>
 
-              <p className="text-3xl font-bold text-brand-pink dark:text-brand-gold mt-4 mb-6">
-                {product.price.toFixed(2)} EGP
-              </p>
-            </div>
-            
-            <Separator className="bg-zinc-700" />
-            
-            {/* Quantity and Add to Cart */}
-            <div className="flex items-center gap-4">
-                <div className="flex items-center border border-zinc-700 rounded-md">
-                    <Button variant="ghost" size="icon" onClick={decrementQuantity} className="h-12 w-12 text-white hover:bg-zinc-800">
-                        <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="w-12 text-center font-bold text-lg">{quantity}</span>
-                     <Button variant="ghost" size="icon" onClick={incrementQuantity} className="h-12 w-12 text-white hover:bg-zinc-800">
-                        <Plus className="h-4 w-4" />
-                    </Button>
-                </div>
-                <Button 
-                    size="lg" 
-                    className="flex-1 bg-brand-pink text-white dark:bg-brand-gold dark:text-black hover:opacity-90 transition-colors h-12 text-base shadow-lg shadow-black/20 hover:shadow-xl"
-                    onClick={handleAddToCart}
-                >
+             <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed font-light">
+               {product.description}
+             </p>
+             
+             <div className="flex gap-4 pt-4">
+                <Link href="/cart" className="flex-1">
+                  <Button className="w-full py-6 text-lg rounded-full bg-black text-white dark:bg-white dark:text-black hover:opacity-90 transition-opacity">
                     Add to Cart
-                </Button>
-            </div>
-
-            <Separator className="bg-zinc-700" />
-
-            {/* Description & Details Accordion */}
-            <div className="prose prose-invert max-w-none text-gray-300">
-                {product.description && <div dangerouslySetInnerHTML={{ __html: product.description.split('</p>')[0] + '</p>' || '' }} />}
-            </div>
-
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1" className="border-zinc-700">
-                <AccordionTrigger className="hover:no-underline text-white">Product Description</AccordionTrigger>
-                <AccordionContent>
-                    <div className="prose prose-invert max-w-none text-sm text-gray-400"
-                        dangerouslySetInnerHTML={{ __html: product.description || 'No description available.' }} />
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2" className="border-zinc-700">
-                <AccordionTrigger className="hover:no-underline text-white">How to Use</AccordionTrigger>
-                <AccordionContent>
-                  <p>Usage instructions specific to this product will be displayed here. For now, please refer to the product packaging.</p>
-                </AccordionContent>
-              </AccordionItem>
-                <AccordionItem value="item-3" className="border-zinc-700">
-                <AccordionTrigger className="hover:no-underline text-white">Ingredients</AccordionTrigger>
-                <AccordionContent>
-                  <p>A full list of ingredients will be available here soon. All our products are formulated with high-quality, safe ingredients and are paraben-free.</p>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+                  </Button>
+                </Link>
+             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

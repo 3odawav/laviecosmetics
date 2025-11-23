@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "ace-vial-458702-q4"
+  },
+  "targets": {
+    "ace-vial-458702-q4": {
+      "hosting": {
+        "target-name": [
+          "out"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
