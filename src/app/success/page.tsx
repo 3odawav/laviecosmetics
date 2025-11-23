@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -18,7 +17,7 @@ export default function SuccessPage() {
             Order Placed Successfully!
           </h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Thank you for your purchase. Your order is being processed and you will receive a confirmation email shortly.
+            Thank you for your purchase. Your order #LAVIE-12345 is being processed and you will receive a confirmation email shortly.
           </p>
         </div>
         <div className="space-y-4">

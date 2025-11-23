@@ -35,7 +35,8 @@ export default function Footer() {
     { name: "Fawry", src: "https://i.ibb.co/HT4BqKfG/New-Project-4.png"},
     { name: "Vodafone Cash", src: "https://i.ibb.co/G3tbq6tK/New-Project-5-4.png"},
     { name: "Instapay", src: "https://i.ibb.co/676FkK9F/New-Project-5.png"},
-    { name: "Orange Money", src: "https://i.ibb.co/rRDg77bY/New-Project-1.png"},
+    { name: "Orange Cash", src: "https://i.ibb.co/rRDg77bY/New-Project-1.png"},
+    { name: "Etisalat Cash", src: "https://www.eand.com.eg/portal/assets/images/e&money-logo.png" }
   ];
 
   return (

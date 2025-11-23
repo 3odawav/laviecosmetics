@@ -52,6 +52,7 @@ export default function Header() {
       <Link href="/shop" className={`${linkColorClass} hover:text-brand-pink dark:hover:text-white transition-colors ${pathname.startsWith('/shop') ? activeLinkClass : ''}`} onClick={() => isMobile && setIsMenuOpen(false)}>{t.header.shop}</Link>
       <Link href="/about" className={`${linkColorClass} hover:text-brand-pink dark:hover:text-white transition-colors ${pathname === '/about' ? activeLinkClass : ''}`} onClick={() => isMobile && setIsMenuOpen(false)}>{t.header.about}</Link>
       <Link href="/contact" className={`${linkColorClass} hover:text-brand-pink dark:hover:text-white transition-colors ${pathname === '/contact' ? activeLinkClass : ''}`} onClick={() => isMobile && setIsMenuOpen(false)}>{t.header.contact}</Link>
+      <Link href="/tracking" className={`${linkColorClass} hover:text-brand-pink dark:hover:text-white transition-colors ${pathname === '/tracking' ? activeLinkClass : ''}`} onClick={() => isMobile && setIsMenuOpen(false)}>Track Order</Link>
     </>
   );
 
@@ -117,6 +118,7 @@ export default function Header() {
                <Link href="/shop" className={`text-gray-800 dark:text-brand-gold hover:text-brand-pink dark:hover:text-white transition-colors ${pathname.startsWith('/shop') ? activeLinkClass : ''}`} onClick={() => setIsMenuOpen(false)}>{t.header.shop}</Link>
                <Link href="/about" className={`text-gray-800 dark:text-brand-gold hover:text-brand-pink dark:hover:text-white transition-colors ${pathname === '/about' ? activeLinkClass : ''}`} onClick={() => setIsMenuOpen(false)}>{t.header.about}</Link>
                <Link href="/contact" className={`text-gray-800 dark:text-brand-gold hover:text-brand-pink dark:hover:text-white transition-colors ${pathname === '/contact' ? activeLinkClass : ''}`} onClick={() => setIsMenuOpen(false)}>{t.header.contact}</Link>
+               <Link href="/tracking" className={`text-gray-800 dark:text-brand-gold hover:text-brand-pink dark:hover:text-white transition-colors ${pathname === '/tracking' ? activeLinkClass : ''}`} onClick={() => setIsMenuOpen(false)}>Track Order</Link>
                <Link href="/login" className="flex items-center gap-2 text-gray-800 dark:text-brand-gold hover:text-brand-pink dark:hover:text-white transition-colors" onClick={() => setIsMenuOpen(false)}>
                   <User size={24}/>
                   <span>{t.header.login}</span>
