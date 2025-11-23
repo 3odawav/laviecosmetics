@@ -1,0 +1,130 @@
+
+"use client";
+import React, { useState } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { PRODUCTS } from '@/lib/data';
+import { Button } from '@/components/ui/button';
+import { motion, AnimatePresence } from 'framer-motion';
+import type { Product } from '@/lib/types';
+import Link from 'next/link';
+
+export default function ShopPage() {
+  const router = useRouter();
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+    // The AnimatePresence and motion components will handle the visual transition.
+    // We navigate after the animation.
+    setTimeout(() => {
+      router.push(`/shop/${product.id}`);
+    }, 1200); // Duration should match animation
+  };
+
+  return (
+    <div className="min-h-screen bg-white dark:bg-black pt-20">
+      {/* Collection Cover Section */}
+      <section className="relative w-full h-[40vh] bg-black text-white flex items-center justify-center text-center mb-16">
+          <Image
+            src="https://i.ibb.co/YBJVmfDZ/Untitled-png.png"
+            alt="Shop Collection"
+            fill
+            className="object-cover object-center opacity-40"
+          />
+          <div className="relative z-10 px-4">
+            <h1 className="text-4xl md:text-6xl caveat-heading">Shop Collection</h1>
+            <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
+              Discover our premium Brazilian hair care solutions, formulated to transform and protect your hair.
+            </p>
+          </div>
+        </section>
+
+      {/* Products Grid */}
+      <div className="container mx-auto px-4 md:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+          {PRODUCTS.map((product) => {
+             const [pTitlePart1, pTitlePart2] = product.title.includes('|')
+                ? product.title.split('|').map(s => s.trim())
+                : [product.title, ''];
+            
+            return (
+            <div key={product.id} className="group cursor-pointer flex flex-col" onClick={() => handleProductClick(product)}>
+              
+              {/* Product Info - Title */}
+               <div className="text-center mb-4">
+                 <h2 className="text-4xl caveat-heading leading-tight min-h-[4rem]">
+                    {pTitlePart1}
+                 </h2>
+               </div>
+              
+              {/* Image Container */}
+              <motion.div layoutId={`product-image-${product.id}`} className="relative aspect-[3/4] w-full overflow-hidden rounded-sm bg-zinc-900/5 dark:bg-zinc-900">
+                <Image
+                  src={product.image}
+                  alt={product.title}
+                  fill
+                  className="object-contain object-center transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                
+                <Button className="absolute bottom-4 left-4 right-4 bg-brand-gold text-white hover:opacity-90 transition-colors backdrop-blur-sm py-3 px-4 text-sm uppercase tracking-widest font-bold opacity-0 translate-y-4 duration-300 group-hover:opacity-100 group-hover:translate-y-0 shadow-lg shadow-black/20 hover:shadow-xl">
+                  Add to Cart — {product.price.toFixed(2)} EGP
+                </Button>
+                
+                {/* Tags */}
+                {product.tags && product.tags.length > 0 && (
+                  <div className="absolute top-2 left-2 flex flex-col gap-1">
+                    {product.tags.map(tag => (
+                      <span key={tag} className="bg-brand-text dark:bg-brand-gold dark:text-black text-white text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded-sm">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+
+              {/* Product Info - Price & Subtitle */}
+              <div className="text-center mt-4">
+                {pTitlePart2 && <p className="font-serif text-lg text-black dark:text-gray-300 mb-1">{pTitlePart2}</p>}
+                <div className="font-bold text-base text-brand-text dark:text-gray-400">
+                  {product.price.toFixed(2)} EGP
+                </div>
+              </div>
+            </div>
+          )})}
+        </div>
+      </div>
+
+       {/* Magic Spin Animation Modal */}
+      <AnimatePresence>
+        {selectedProduct && (
+          <motion.div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedProduct(null)}
+          >
+            <motion.div
+              layoutId={`product-image-${selectedProduct.id}`}
+              className="relative w-64 h-64 md:w-96 md:h-96"
+              animate={{
+                rotate: 720,
+                transition: { duration: 1, ease: "easeInOut" },
+              }}
+            >
+              <Image
+                src={selectedProduct.image}
+                alt={selectedProduct.title}
+                fill
+                className="object-contain"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+    </div>
+  );
+}
