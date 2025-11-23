@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -28,15 +29,14 @@ export default function Footer() {
   const whiteLogo = "https://i.ibb.co/bnrr18f/Lavie-1080-x-1080-px-1080-x-360-px.png";
   const logoSrc = theme === 'dark' ? goldLogo : whiteLogo;
 
-  // ✅ تعديلات "هجومية" على المقاسات عشان نعالج الفراغات الكبيرة في الصور
   const paymentMethods = [
-    { name: "Visa", src: "https://i.ibb.co/9jKj8q3/New-Project.png", scale: 1.6 },  // كبرته 60%
-    { name: "Mastercard", src: "https://i.ibb.co/1fmZ67Q7/New-Project-2.png", scale: 1.6 }, 
-    { name: "Meeza", src: "https://i.ibb.co/hFRFqh6M/New-Project-3.png", scale: 1.4 },
-    { name: "Fawry", src: "https://i.ibb.co/HT4BqKfG/New-Project-4.png", scale: 2.5 }, // ده محتاج تكبير كبير جداً
-    { name: "Vodafone Cash", src: "https://i.ibb.co/G3tbq6tK/New-Project-5-4.png", scale: 2.8 }, // ده كان صغير جداً في الصورة
-    { name: "Instapay", src: "https://i.ibb.co/676FkK9F/New-Project-5.png", scale: 2.6 }, // وإنستا باي كمان
-    { name: "Orange Cash", src: "https://i.ibb.co/rRDg77bY/New-Project-1.png", scale: 2.6 },
+    { name: "Visa", src: "https://i.ibb.co/9jKj8q3/New-Project.png" },
+    { name: "Mastercard", src: "https://i.ibb.co/1fmZ67Q7/New-Project-2.png" },
+    { name: "Meeza", src: "https://i.ibb.co/hFRFqh6M/New-Project-3.png"},
+    { name: "Fawry", src: "https://i.ibb.co/HT4BqKfG/New-Project-4.png"},
+    { name: "Vodafone Cash", src: "https://i.ibb.co/G3tbq6tK/New-Project-5-4.png"},
+    { name: "Instapay", src: "https://i.ibb.co/676FkK9F/New-Project-5.png"},
+    { name: "Orange Cash", src: "https://i.ibb.co/rRDg77bY/New-Project-1.png"},
   ];
 
   return (
@@ -114,24 +114,15 @@ export default function Footer() {
         <div className="border-t border-zinc-800 pt-8 mb-8">
             <div className="max-w-xl mx-auto flex flex-col items-center justify-center">
                 <h5 className="text-sm text-gray-400 mb-4">Secure Payment Partners</h5>
-                {/* زودنا gap-x-8 ومسافة رأسية gap-y-6 عشان لما يكبروا مايلزقوش في بعض */}
-                <div className="flex items-center justify-center gap-x-8 gap-y-6 flex-wrap">
-                    {paymentMethods.map((method, index) => (
-                        // زودنا حجم الـ Container نفسه لـ w-24 h-12
-                        <div 
-                            key={index} 
-                            className="relative h-12 w-24 flex items-center justify-center grayscale-[50%] hover:grayscale-0 transition-all duration-300 opacity-90 hover:opacity-100"
-                        >
+                <div className="flex items-center justify-center gap-4 flex-wrap">
+                    {paymentMethods.map((method) => (
+                        <div key={method.name} className="relative h-8 w-14 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all">
                             <Image 
                                 src={method.src} 
                                 alt={method.name} 
-                                fill 
+                                fill
                                 className="object-contain"
-                                sizes="96px"
-                                style={{ 
-                                    transform: `scale(${method.scale})`,
-                                    transformOrigin: 'center'
-                                }}
+                                sizes="56px"
                             />
                         </div>
                     ))}
