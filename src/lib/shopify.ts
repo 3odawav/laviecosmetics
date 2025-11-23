@@ -1,3 +1,5 @@
+
+'use client';
 // src/lib/shopify.ts
 
 import type { Product } from './types';
@@ -29,7 +31,7 @@ async function shopifyFetch<T>({
 
   if (SHOPIFY_ACCESS_TOKEN === 'YOUR_ACCESS_TOKEN_HERE') {
     throw new Error(
-      'Shopify Access Token is not configured. Please replace "YOUR_ACCESS_TOKEN_HERE" in your .env.local file with a valid Storefront API access token.'
+      'Shopify Storefront Access Token is not configured. Please replace "YOUR_ACCESS_TOKEN_HERE" in your .env.local file with a valid token. You can generate one in your Shopify Admin under Apps and sales channels > Develop apps > Create an app.'
     );
   }
 
@@ -43,16 +45,22 @@ async function shopifyFetch<T>({
         'X-Shopify-Storefront-Access-Token': SHOPIFY_ACCESS_TOKEN,
       },
       body: JSON.stringify({ query, variables }),
-      cache: 'no-store', // Use 'no-store' for dynamic data, or configure revalidation
+      cache: 'no-store',
     });
 
     const result = await response.json();
 
     if (result.errors) {
       console.error('Shopify Errors:', result.errors);
-      throw new Error(
-        `Shopify request failed: ${result.errors.map((e: ShopifyError) => e.message).join(', ')}`
-      );
+      const errorMessage = result.errors.map((e: ShopifyError) => e.message).join(', ');
+      
+      if (errorMessage.includes('Invalid API key or access token')) {
+          throw new Error(
+            'The provided Shopify Storefront Access Token is invalid or expired. Please check your .env.local file and generate a new token from your Shopify Admin if needed.'
+          );
+      }
+
+      throw new Error(`Shopify request failed: ${errorMessage}`);
     }
 
     return result;
@@ -133,49 +141,37 @@ const mapShopifyProduct = (edge: any): Product => {
 };
 
 export async function getAllProducts(): Promise<Product[]> {
-  try {
-      const response = await shopifyFetch<{ products: { edges: any[] } }>({
-        query: AllProductsQuery,
-      });
+    const response = await shopifyFetch<{ products: { edges: any[] } }>({
+      query: AllProductsQuery,
+    });
 
-      if (!response.data.products) {
-        return [];
-      }
+    if (!response.data.products) {
+      return [];
+    }
 
-      return response.data.products.edges.map(mapShopifyProduct);
-  } catch (error) {
-    console.error("Error in getAllProducts:", error);
-    // In a real app, you might want to return a default/empty state
-    // or re-throw the error to be handled by an error boundary.
-    return [];
-  }
+    return response.data.products.edges.map(mapShopifyProduct);
 }
 
 export async function getProductByHandle(handle: string): Promise<Product | null> {
-    try {
-        const response = await shopifyFetch<{ product: any }>({
-            query: ProductByHandleQuery,
-            variables: { handle },
-        });
+    const response = await shopifyFetch<{ product: any }>({
+        query: ProductByHandleQuery,
+        variables: { handle },
+    });
 
-        if (!response.data.product) {
-            return null;
-        }
-
-        const { product } = response.data;
-        
-        return {
-            id: product.id,
-            title: product.title,
-            handle: product.handle,
-            price: parseFloat(product.priceRange.minVariantPrice.amount),
-            image: product.images.edges[0]?.node.url || '/placeholder.png',
-            images: product.images.edges.map((edge: any) => edge.node.url),
-            tags: product.tags || [],
-            description: product.descriptionHtml,
-        };
-    } catch (error) {
-        console.error(`Error in getProductByHandle for handle ${handle}:`, error);
+    if (!response.data.product) {
         return null;
     }
+
+    const { product } = response.data;
+    
+    return {
+        id: product.id,
+        title: product.title,
+        handle: product.handle,
+        price: parseFloat(product.priceRange.minVariantPrice.amount),
+        image: product.images.edges[0]?.node.url || '/placeholder.png',
+        images: product.images.edges.map((edge: any) => edge.node.url),
+        tags: product.tags || [],
+        description: product.descriptionHtml,
+    };
 }
