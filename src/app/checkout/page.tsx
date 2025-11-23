@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState } from 'react';
@@ -17,11 +16,26 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
 import { FaCcVisa, FaCcMastercard } from 'react-icons/fa';
-import { SiVodafone } from 'react-icons/si';
 
 const EGYPTIAN_GOVERNORATES = [
   'Alexandria', 'Aswan', 'Asyut', 'Beheira', 'Beni Suef', 'Cairo', 'Dakahlia', 'Damietta', 'Faiyum', 'Gharbia', 'Giza', 'Ismailia', 'Kafr El Sheikh', 'Luxor', 'Matruh', 'Minya', 'Monufia', 'New Valley', 'North Sinai', 'Port Said', 'Qalyubia', 'Qena', 'Red Sea', 'Sharqia', 'Sohag', 'South Sinai', 'Suez'
 ];
+
+const paymentLogos = {
+    cards: [
+        { name: "Meeza", src: "https://i.ibb.co/hFRFqh6M/New-Project-3.png"},
+        { name: "Visa", src: "https://i.ibb.co/9jKj8q3/New-Project.png" },
+        { name: "Mastercard", src: "https://i.ibb.co/1fmZ67Q7/New-Project-2.png" },
+    ],
+    wallets: [
+        { name: "Vodafone Cash", src: "https://i.ibb.co/G3tbq6tK/New-Project-5-4.png"},
+        { name: "Instapay", src: "https://i.ibb.co/676FkK9F/New-Project-5.png"},
+        { name: "Orange Money", src: "https://i.ibb.co/rRDg77bY/New-Project-1.png"},
+    ],
+    gateways: [
+        { name: "Fawry", src: "https://i.ibb.co/HT4BqKfG/New-Project-4.png"},
+    ]
+};
 
 type PaymentMethod = 'card' | 'wallet' | 'fawry' | 'cod';
 
@@ -36,14 +50,13 @@ export default function CheckoutPage() {
     router.push('/success');
   };
 
-  const PaymentMethodLogos = () => (
+  const PaymentMethodLogos = ({ methods }: { methods: {name: string, src: string}[]}) => (
     <div className="flex items-center space-x-2">
-      <Image src="https://i.ibb.co/L9bCjY9/Meeza-logo-vector-01.png" alt="Meeza" width={40} height={24} className="object-contain" />
-      <FaCcVisa className="text-blue-600" size={24} />
-      <FaCcMastercard className="text-red-600" size={24} />
-      <Image src="https://i.ibb.co/3W6f5fS/fawry-logo.png" alt="Fawry" width={50} height={24} className="object-contain" />
-      <SiVodafone className="text-red-500" size={24} />
-       <Image src="https://i.ibb.co/yY1Z3yV/instapay-logo-A1-A4-A3-D10-F-seeklogo-com.png" alt="Instapay" width={50} height={24} className="object-contain" />
+      {methods.map(method => (
+        <div key={method.name} className="relative h-6 w-10">
+          <Image src={method.src} alt={method.name} fill className="object-contain" />
+        </div>
+      ))}
     </div>
   );
 
@@ -117,7 +130,7 @@ export default function CheckoutPage() {
                        <RadioGroupItem value="card" id="card" />
                        <span className="font-medium dark:text-white">Credit/Debit Card</span>
                     </div>
-                    <PaymentMethodLogos />
+                    <PaymentMethodLogos methods={paymentLogos.cards} />
                   </Label>
                   {paymentMethod === 'card' && (
                     <div className="grid grid-cols-2 gap-4 p-4 border border-t-0 rounded-b-lg border-gray-200 dark:border-zinc-700 -mt-4">
@@ -127,13 +140,19 @@ export default function CheckoutPage() {
                     </div>
                   )}
                   {/* Other methods */}
-                  <Label htmlFor="wallet" className="flex items-center p-4 border rounded-lg cursor-pointer has-[:checked]:border-brand-pink has-[:checked]:dark:border-brand-gold dark:border-zinc-700">
-                     <RadioGroupItem value="wallet" id="wallet" />
-                     <span className="ml-4 font-medium dark:text-white">Mobile Wallets</span>
+                  <Label htmlFor="wallet" className="flex items-center justify-between p-4 border rounded-lg cursor-pointer has-[:checked]:border-brand-pink has-[:checked]:dark:border-brand-gold dark:border-zinc-700">
+                    <div className="flex items-center space-x-4">
+                        <RadioGroupItem value="wallet" id="wallet" />
+                        <span className="font-medium dark:text-white">Mobile Wallets</span>
+                    </div>
+                     <PaymentMethodLogos methods={paymentLogos.wallets} />
                   </Label>
-                   <Label htmlFor="fawry" className="flex items-center p-4 border rounded-lg cursor-pointer has-[:checked]:border-brand-pink has-[:checked]:dark:border-brand-gold dark:border-zinc-700">
-                     <RadioGroupItem value="fawry" id="fawry" />
-                     <span className="ml-4 font-medium dark:text-white">Fawry Pay</span>
+                   <Label htmlFor="fawry" className="flex items-center justify-between p-4 border rounded-lg cursor-pointer has-[:checked]:border-brand-pink has-[:checked]:dark:border-brand-gold dark:border-zinc-700">
+                     <div className="flex items-center space-x-4">
+                        <RadioGroupItem value="fawry" id="fawry" />
+                        <span className="font-medium dark:text-white">Fawry Pay</span>
+                     </div>
+                     <PaymentMethodLogos methods={paymentLogos.gateways} />
                   </Label>
                    <Label htmlFor="cod" className="flex items-center p-4 border rounded-lg cursor-pointer has-[:checked]:border-brand-pink has-[:checked]:dark:border-brand-gold dark:border-zinc-700">
                      <RadioGroupItem value="cod" id="cod" />

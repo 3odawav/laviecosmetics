@@ -1,5 +1,4 @@
-
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -56,11 +55,10 @@ export default function Header() {
     </>
   );
 
-  // URLs for the logos
-  const goldLogo = "https://i.ibb.co/jFM0BXS/Untitled-design-2.png"; // Gold on transparent
-  const whiteLogo = "https://i.ibb.co/bnrr18f/Lavie-1080-x-1080-px-1080-x-360-px.png"; // White logo for light mode
+  const goldLogo = "https://i.ibb.co/jFM0BXS/Untitled-design-2.png";
+  const whiteLogo = "https://i.ibb.co/bnrr18f/Lavie-1080-x-1080-px-1080-x-360-px.png";
   
-  const logoSrc = theme === 'dark' ? goldLogo : whiteLogo;
+  const logoSrc = theme === 'dark' ? goldLogo : (isScrolled || !isHomePage ? "https://i.ibb.co/Jq8xJg4/Lavie-1080-x-1080-px-1080-x-360-px-1.png" : whiteLogo);
 
 
   return (

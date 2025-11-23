@@ -1,4 +1,3 @@
-
 'use client';
 import React from 'react';
 import Link from 'next/link';
@@ -49,7 +48,7 @@ export default function CartPage() {
     }
 
   return (
-    <div className="min-h-screen bg-white text-brand-green-dark dark:bg-black dark:text-gray-300 pt-20">
+    <div className="min-h-screen bg-white text-brand-text dark:bg-black dark:text-gray-300 pt-20">
       <main className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl caveat-heading text-brand-pink dark:text-brand-gold">Shopping Cart</h1>

@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -58,7 +57,7 @@ export default function SignupPage() {
         <Image
           src="https://i.ibb.co/8gdnLkSg/20251119-0355-Luxurious-Bathroom-Elegance-remix-01kacx27m6enwvg1km3mcwxhmj.png"
           alt="Luxury Bathroom"
-          layout="fill"
+          fill
           objectFit="cover"
         />
          <div className="absolute inset-0 bg-black/30"></div>
@@ -66,4 +65,3 @@ export default function SignupPage() {
     </div>
   )
 }
-

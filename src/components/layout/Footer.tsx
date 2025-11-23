@@ -1,5 +1,4 @@
-
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -36,7 +35,7 @@ export default function Footer() {
     { name: "Fawry", src: "https://i.ibb.co/HT4BqKfG/New-Project-4.png"},
     { name: "Vodafone Cash", src: "https://i.ibb.co/G3tbq6tK/New-Project-5-4.png"},
     { name: "Instapay", src: "https://i.ibb.co/676FkK9F/New-Project-5.png"},
-    { name: "Orange Cash", src: "https://i.ibb.co/rRDg77bY/New-Project-1.png"},
+    { name: "Orange Money", src: "https://i.ibb.co/rRDg77bY/New-Project-1.png"},
   ];
 
   return (
@@ -92,7 +91,7 @@ export default function Footer() {
               <li><Link href="/shop" className="hover:text-white transition-colors text-gray-400 dark:text-gray-400 dark:hover:text-white">Shop All Products</Link></li>
               <li><Link href="/shop" className="hover:text-white transition-colors text-gray-400 dark:text-gray-400 dark:hover:text-white">Best Sellers</Link></li>
               <li><Link href="/about" className="hover:text-white transition-colors text-gray-400 dark:text-gray-400 dark:hover:text-white">About Us</Link></li>
-              <li><Link href="/terms" className="hover:text-white transition-colors text-gray-400 dark:text-gray-400 dark:hover:text-white">Terms of Service</Link></li>
+              <li><Link href="/tracking" className="hover:text-white transition-colors text-gray-400 dark:text-gray-400 dark:hover:text-white">Track Order</Link></li>
             </ul>
           </div>
 
@@ -113,10 +112,10 @@ export default function Footer() {
         {/* Payment Methods */}
         <div className="border-t border-zinc-800 pt-8 mb-8">
             <div className="max-w-xl mx-auto flex flex-col items-center justify-center">
-                <h5 className="text-sm text-gray-400 mb-4">Secure Payment Partners</h5>
+                <h5 className="text-sm text-gray-400 mb-4">We Accept</h5>
                 <div className="flex items-center justify-center gap-4 flex-wrap">
                     {paymentMethods.map((method) => (
-                        <div key={method.name} className="relative h-8 w-14 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all">
+                         <div key={method.name} className="relative h-8 w-14 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all">
                             <Image 
                                 src={method.src} 
                                 alt={method.name} 
