@@ -12,6 +12,7 @@ export default function ShopPage() {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -19,8 +20,9 @@ export default function ShopPage() {
       try {
         const fetchedProducts = await getAllProducts();
         setProducts(fetchedProducts);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Failed to fetch products:", error);
+        setError(error.message || "An unknown error occurred.");
       } finally {
         setIsLoading(false);
       }
@@ -36,6 +38,22 @@ export default function ShopPage() {
       }
     }, 1200);
   };
+  
+    if (error) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-black pt-20 flex items-center justify-center">
+        <div className="container mx-auto px-4 md:px-8 py-12 text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Failed to load products</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
+            There was an issue connecting to Shopify. Please ensure your environment variables are set up correctly.
+          </p>
+          <pre className="text-left bg-gray-100 dark:bg-zinc-900 p-4 rounded-md text-red-500 text-sm overflow-x-auto">
+            <code>{error}</code>
+          </pre>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (

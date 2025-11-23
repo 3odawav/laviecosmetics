@@ -23,7 +23,13 @@ async function shopifyFetch<T>({
 }): Promise<ShopifyResponse<T>> {
   if (!SHOPIFY_DOMAIN || !SHOPIFY_ACCESS_TOKEN) {
     throw new Error(
-      'Shopify domain or access token is not configured in environment variables.'
+      'Shopify domain or access token is not configured in environment variables. Please check your .env.local file.'
+    );
+  }
+
+  if (SHOPIFY_ACCESS_TOKEN === 'YOUR_ACCESS_TOKEN_HERE') {
+    throw new Error(
+      'Shopify Access Token is not configured. Please replace "YOUR_ACCESS_TOKEN_HERE" in your .env.local file with a valid Storefront API access token.'
     );
   }
 
@@ -122,37 +128,54 @@ const mapShopifyProduct = (edge: any): Product => {
     image: node.images.edges[0]?.node.url || '/placeholder.png',
     tags: node.tags || [],
     description: node.descriptionHtml,
+    images: node.images.edges.map((edge: any) => edge.node.url),
   };
 };
 
 export async function getAllProducts(): Promise<Product[]> {
-  const response = await shopifyFetch<{ products: { edges: any[] } }>({
-    query: AllProductsQuery,
-  });
+  try {
+      const response = await shopifyFetch<{ products: { edges: any[] } }>({
+        query: AllProductsQuery,
+      });
 
-  return response.data.products.edges.map(mapShopifyProduct);
+      if (!response.data.products) {
+        return [];
+      }
+
+      return response.data.products.edges.map(mapShopifyProduct);
+  } catch (error) {
+    console.error("Error in getAllProducts:", error);
+    // In a real app, you might want to return a default/empty state
+    // or re-throw the error to be handled by an error boundary.
+    return [];
+  }
 }
 
 export async function getProductByHandle(handle: string): Promise<Product | null> {
-    const response = await shopifyFetch<{ product: any }>({
-        query: ProductByHandleQuery,
-        variables: { handle },
-    });
+    try {
+        const response = await shopifyFetch<{ product: any }>({
+            query: ProductByHandleQuery,
+            variables: { handle },
+        });
 
-    if (!response.data.product) {
+        if (!response.data.product) {
+            return null;
+        }
+
+        const { product } = response.data;
+        
+        return {
+            id: product.id,
+            title: product.title,
+            handle: product.handle,
+            price: parseFloat(product.priceRange.minVariantPrice.amount),
+            image: product.images.edges[0]?.node.url || '/placeholder.png',
+            images: product.images.edges.map((edge: any) => edge.node.url),
+            tags: product.tags || [],
+            description: product.descriptionHtml,
+        };
+    } catch (error) {
+        console.error(`Error in getProductByHandle for handle ${handle}:`, error);
         return null;
     }
-
-    const { product } = response.data;
-    
-    return {
-        id: product.id,
-        title: product.title,
-        handle: product.handle,
-        price: parseFloat(product.priceRange.minVariantPrice.amount),
-        image: product.images.edges[0]?.node.url || '/placeholder.png',
-        images: product.images.edges.map((edge: any) => edge.node.url),
-        tags: product.tags || [],
-        description: product.descriptionHtml,
-    };
 }

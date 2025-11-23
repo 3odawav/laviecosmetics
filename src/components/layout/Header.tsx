@@ -59,7 +59,7 @@ export default function Header() {
   const goldLogo = "https://i.ibb.co/jFM0BXS/Untitled-design-2.png";
   const whiteLogo = "https://i.ibb.co/bnrr18f/Lavie-1080-x-1080-px-1080-x-360-px.png";
   
-  const logoSrc = theme === 'dark' ? goldLogo : (isScrolled || !isHomePage ? "https://i.ibb.co/Jq8xJg4/Lavie-1080-x-1080-px-1080-x-360-px-1.png" : whiteLogo);
+  const logoSrc = theme === 'dark' ? goldLogo : (isScrolled || !isHomePage ? "https://i.ibb.co/xSkmkymJ/9-1.png" : whiteLogo);
 
 
   return (
