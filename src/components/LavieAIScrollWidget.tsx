@@ -4,36 +4,15 @@ import { FormEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Bot, User, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-
-interface Message {
-  from: 'user' | 'ai';
-  text: string;
-}
-
-// Basic AI logic (can be expanded)
-function createAiReply(text: string): string {
-  const lower = text.toLowerCase();
-  if (lower.includes('تساقط') || lower.includes('fall')) {
-    return 'لمعالجة تساقط الشعر، ركزي على التغذية السليمة، صحة فروة الرأس، واستخدام منتجات مناسبة. الشامبو الخالي من السلفات والسيروم المقوي للجذور هما بداية ممتازة.';
-  }
-  if (lower.includes('هيشان') || lower.includes('frizz')) {
-    return 'الهيشان عادة ما يكون سببه الجفاف. استخدمي ماسك ترطيب عميق مرة أسبوعيًا مع سيروم حماية من الحرارة. منتجاتنا بالكرياتين البرازيلي ممتازة للتحكم في الهيشان.';
-  }
-  if (lower.includes('سعر') || lower.includes('price')) {
-    return 'يمكنك العثور على جميع الأسعار في صفحة التسوق الخاصة بنا. كل منتج له سعر محدد بناءً على حجمه وتركيبته.';
-  }
-  if (lower.includes('بروتين') || lower.includes('treatment')) {
-    return 'علاجات البروتين لدينا مصممة لتقوية وإعادة بناء الشعر. للحصول على أفضل النتائج، نوصي باستشارة متخصص لتحديد العلاج الأنسب لنوع شعرك.';
-  }
-  return 'أهلاً بك في مساعد La Vie AI. كيف يمكنني مساعدتك اليوم في رحلتك للحصول على شعر صحي وجميل؟ اسألني عن المنتجات، مشاكل الشعر، أو الروتين المناسب لك.';
-}
+import { getHairConsultation } from '@/services/geminiService';
+import type { ChatMessage } from '@/lib/types';
 
 export default function LavieAIScrollWidget() {
   const [scrollY, setScrollY] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      from: 'ai',
+      role: 'model',
       text: 'أهلاً بكِ في مساعد La Vie AI. أنا هنا لمساعدتك في العثور على أفضل المنتجات والحلول لشعرك. بماذا يمكنني خدمتك اليوم؟',
     },
   ]);
@@ -48,37 +27,39 @@ export default function LavieAIScrollWidget() {
 
   const translateY = Math.min(20, scrollY * 0.03);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const trimmed = input.trim();
     if (!trimmed || isLoading) return;
 
-    const userMessage: Message = { from: 'user', text: trimmed };
+    const userMessage: ChatMessage = { role: 'user', text: trimmed };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
+    
+    const history = [...messages, userMessage].map(m => ({role: m.role, text: m.text}));
 
-    setTimeout(() => {
-      const aiMessage: Message = { from: 'ai', text: createAiReply(trimmed) };
-      setMessages(prev => [...prev, aiMessage]);
-      setIsLoading(false);
-    }, 1000);
+    const aiResponseText = await getHairConsultation(history);
+    
+    const aiMessage: ChatMessage = { role: 'model', text: aiResponseText };
+    setMessages(prev => [...prev, aiMessage]);
+    setIsLoading(false);
   };
 
   return (
     <>
       {/* Floating AI Button */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div className="fixed bottom-28 right-6 z-40">
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="group relative flex items-center justify-center w-20 h-20 bg-brand-pink dark:bg-brand-gold rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
+          className="group relative flex items-center justify-center w-24 h-24 bg-brand-pink dark:bg-brand-gold rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
           style={{ transform: `translateY(-${translateY}px)` }}
           aria-label="Open AI Chat"
         >
           <div className="absolute -top-5 -left-5 w-32 h-32">
             <Image
-              src="https://i.ibb.co/0pJwVG44/Untitled-design.png"
+              src="https://i.ibb.co/xSkmkymJ/9-1.png"
               alt="LAVIE AI"
               width={128}
               height={128}
@@ -144,10 +125,10 @@ export default function LavieAIScrollWidget() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.1 }}
                     className={`flex items-start gap-3 ${
-                      m.from === 'user' ? 'justify-end' : ''
+                      m.role === 'user' ? 'justify-end' : ''
                     }`}
                   >
-                    {m.from === 'ai' && (
+                    {m.role === 'model' && (
                       <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center shrink-0 p-1">
                         <Image
                           src="https://i.ibb.co/xSkmkymJ/9-1.png"
@@ -160,14 +141,14 @@ export default function LavieAIScrollWidget() {
                     )}
                     <div
                       className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
-                        m.from === 'ai'
+                        m.role === 'model'
                           ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-bl-none'
                           : 'bg-brand-pink dark:bg-brand-gold text-white dark:text-black rounded-br-none'
                       }`}
                     >
                       {m.text}
                     </div>
-                    {m.from === 'user' && (
+                    {m.role === 'user' && (
                       <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center shrink-0">
                         <User className="w-5 h-5 text-zinc-600 dark:text-zinc-300" />
                       </div>
@@ -232,3 +213,5 @@ export default function LavieAIScrollWidget() {
     </>
   );
 }
+
+    
