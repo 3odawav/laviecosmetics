@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppBtn from "@/components/WhatsAppBtn";
-import LavieAIScrollWidget from "@/components/LavieAIScrollWidget";
+import AIConsultant from "@/components/AIConsultant";
 
 export const metadata: Metadata = {
 title: "LAVIE COSMETICS EGYPT | Official La Vie Professional Distributor",
@@ -44,7 +44,7 @@ h1, h2, h3, h4, h5, h6, .font-serif { font-family: 'Baskervville', serif; }
               <Header />
               {children}
               <WhatsAppBtn />
-              <LavieAIScrollWidget />
+              <AIConsultant />
               <Footer />
               <Toaster />
           </LanguageProvider>
