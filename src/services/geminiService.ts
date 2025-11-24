@@ -1,16 +1,19 @@
 'use server';
 
 import {
-  getHairConsultation as getHairConsultationFlow,
-  type HairConsultationInput,
-} from '@/ai/flows/hair-consultant-flow';
+  chatWithLavie
+} from '@/ai/flows/consultantFlow';
+import { ChatMessage } from '@/lib/types';
+
 
 export async function getHairConsultation(
-  history: HairConsultationInput['history']
+  history: ChatMessage[]
 ): Promise<string> {
   try {
-    const result = await getHairConsultationFlow({ history });
-    return result.response;
+    // Get the last message from the user
+    const userMessage = history.findLast(m => m.role === 'user')?.text || '';
+    const result = await chatWithLavie(userMessage);
+    return result.reply;
   } catch (error) {
     console.error('Error getting hair consultation:', error);
     return "I'm sorry, I'm having trouble connecting right now. Please try again in a moment.";
