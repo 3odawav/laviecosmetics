@@ -8,6 +8,16 @@ import { PRODUCTS } from '@/lib/data';
 const SLIDES = [
 {
 type: 'video',
+src: 'https://res.cloudinary.com/dvuzdllda/video/upload/v1763946531/sahrana_clip_vpslcy.mp4',
+duration: 8000,
+title: "Get In Touch",
+subtitle: "We're Here to Help",
+description: "Have questions? Our team is ready to provide expert advice and support for all your hair care needs.",
+cta: "Contact Us",
+link: "/contact"
+},
+{
+type: 'video',
 src: 'https://res.cloudinary.com/dvuzdllda/video/upload/v1763793653/sahrana_clip_-2_dkc9rj.mp4',
 duration: 8000,
 title: "La Vie Professional",
