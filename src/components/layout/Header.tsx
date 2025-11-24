@@ -1,3 +1,4 @@
+
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -58,13 +59,12 @@ export default function Header() {
 
   const goldLogo = "https://i.ibb.co/xSkmkymJ/9-1.png";
   const whiteLogo = "https://i.ibb.co/xSkmkymJ/9-1.png";
-  const scrolledLogo = "https://i.ibb.co/xSkmkymJ/9-1.png";
   
   let logoSrc = whiteLogo;
   if (theme === 'dark') {
     logoSrc = goldLogo;
   } else if (isScrolled || !isHomePage) {
-    logoSrc = scrolledLogo;
+    logoSrc = goldLogo;
   }
 
 
