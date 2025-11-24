@@ -8,7 +8,7 @@ import { useTheme } from '@/context/ThemeContext';
 export default function WhatsAppBtn() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  const bg = isDark ? '#D4AF37' : '#25D366';
+  const bg = isDark ? '#C9A24F' : '#25D366'; // Dark mode: brand-gold, Light mode: green
   const iconColor = isDark ? 'black' : 'white';
 
   return (

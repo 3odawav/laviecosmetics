@@ -5,8 +5,6 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -34,7 +32,6 @@ const paymentLogos = {
 };
 
 export default function CheckoutPaymentPage() {
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('card');
   const router = useRouter();
 
   const handlePlaceOrder = () => {
@@ -204,5 +201,3 @@ export default function CheckoutPaymentPage() {
     </div>
   );
 }
-
-    

@@ -56,10 +56,16 @@ export default function Header() {
     </>
   );
 
-  const goldLogo = "https://i.ibb.co/jFM0BXS/Untitled-design-2.png";
-  const whiteLogo = "https://i.ibb.co/bnrr18f/Lavie-1080-x-1080-px-1080-x-360-px.png";
+  const goldLogo = "https://i.ibb.co/xSkmkymJ/9-1.png";
+  const whiteLogo = "https://i.ibb.co/xSkmkymJ/9-1.png";
+  const scrolledLogo = "https://i.ibb.co/xSkmkymJ/9-1.png";
   
-  const logoSrc = theme === 'dark' ? goldLogo : (isScrolled || !isHomePage ? "https://i.ibb.co/xSkmkymJ/9-1.png" : whiteLogo);
+  let logoSrc = whiteLogo;
+  if (theme === 'dark') {
+    logoSrc = goldLogo;
+  } else if (isScrolled || !isHomePage) {
+    logoSrc = scrolledLogo;
+  }
 
 
   return (
@@ -74,13 +80,13 @@ export default function Header() {
 
           {/* Logo - Centered */}
           <div className="flex-1 flex justify-center md:w-1/3">
-            <Link href="/">
+             <Link href="/">
               <Image
                 src={logoSrc}
                 alt="LAVIE Logo"
-                width={140}
+                width={56}
                 height={56}
-                className="h-14 w-auto drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]"
+                className="h-14 w-14 object-contain drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]"
                 priority
               />
             </Link>

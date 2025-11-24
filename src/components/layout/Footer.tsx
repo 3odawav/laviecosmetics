@@ -113,7 +113,7 @@ export default function Footer() {
         {/* Payment Methods */}
         <div className="border-t border-zinc-800 pt-8 mb-8">
             <div className="max-w-xl mx-auto flex flex-col items-center justify-center">
-                <h5 className="text-sm text-gray-400 mb-4">We Accept</h5>
+                <h5 className="text-sm text-gray-400 mb-4">Secure Payment Partners</h5>
                 <div className="flex items-center justify-center gap-4 flex-wrap">
                     {paymentMethods.map((method) => (
                          <div key={method.name} className="relative h-8 w-14 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all">

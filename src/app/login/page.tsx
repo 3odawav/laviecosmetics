@@ -58,7 +58,7 @@ export default function LoginPage() {
           src="https://i.ibb.co/8gdnLkSg/20251119-0355-Luxurious-Bathroom-Elegance-remix-01kacx27m6enwvg1km3mcwxhmj.png"
           alt="Luxury Bathroom"
           fill
-          objectFit="cover"
+          className="object-cover"
         />
          <div className="absolute inset-0 bg-black/30"></div>
       </div>
