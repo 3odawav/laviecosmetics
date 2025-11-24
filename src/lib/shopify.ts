@@ -51,7 +51,8 @@ async function shopifyFetch<T>({
     const result = await response.json();
 
     if (result.errors) {
-      const errorMessage = result.errors.map((e: ShopifyError) => e.message).join(', ');
+      console.error('Raw Shopify Errors:', JSON.stringify(result.errors, null, 2));
+      const errorMessage = result.errors.map((e: ShopifyError) => e.message || 'Unknown Shopify Error').join(', ');
       
       if (errorMessage.includes('Invalid API key or access token')) {
           throw new Error(
