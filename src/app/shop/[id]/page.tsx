@@ -14,9 +14,9 @@ export async function generateStaticParams() {
 }
 
 // This is the Server Component for the product detail page.
-export default async function ProductPage({ params }: { params: { id: string } }) {
+export default async function ProductPage({ params: { id } }: { params: { id: string } }) {
   // Fetch the specific product for this page using its handle (the 'id' from the URL)
-  const product = await getProductByHandle(params.id);
+  const product = await getProductByHandle(id);
 
   // If no product is found for the given handle, show a 404 page.
   if (!product) {
