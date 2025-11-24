@@ -58,43 +58,52 @@ export default function ContactPage() {
               </div>
               
               {/* Contact Info */}
-              <div className="flex flex-col justify-center">
-                 <h2 className="text-4xl md:text-5xl mb-8 caveat-heading text-brand-pink dark:text-brand-gold">Get in Touch</h2>
-                 <div className="space-y-6">
-                    <div className="flex items-start gap-4">
-                        <div className="bg-brand-pink/10 dark:bg-brand-gold/10 p-3 rounded-full text-brand-pink dark:text-brand-gold">
-                            <MapPin className="w-5 h-5"/>
+              <div className="relative rounded-lg overflow-hidden flex flex-col justify-center p-8 text-white">
+                <Image
+                    src="https://i.ibb.co/pBRk4bPM/Whisk-8a6fd10b0887b07be4e46265edd8e066eg.png"
+                    alt="Get in touch background"
+                    fill
+                    className="object-cover z-0"
+                />
+                <div className="absolute inset-0 bg-black/50 z-0"></div>
+                <div className="relative z-10">
+                    <h2 className="text-4xl md:text-5xl mb-8 caveat-heading text-brand-gold">Get in Touch</h2>
+                    <div className="space-y-6">
+                        <div className="flex items-start gap-4">
+                            <div className="bg-brand-gold/10 p-3 rounded-full text-brand-gold">
+                                <MapPin className="w-5 h-5"/>
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-white">Our Office</h3>
+                                <p className="text-gray-200">P7 Tower - Office 211 - Podium 7, Cairo Festival City, New Cairo, Egypt</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 className="font-bold dark:text-white">Our Office</h3>
-                            <p className="text-gray-600 dark:text-gray-400">P7 Tower - Office 211 - Podium 7, Cairo Festival City, New Cairo, Egypt</p>
+                        <div className="flex items-start gap-4">
+                            <div className="bg-brand-gold/10 p-3 rounded-full text-brand-gold">
+                                <Phone className="w-5 h-5"/>
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-white">Phone Support</h3>
+                                <p className="text-gray-200">
+                                    <a href="tel:+201097230130" className="hover:text-brand-gold transition-colors">+20 109 723 0130</a>
+                                </p>
+                                <p className="text-xs text-gray-400">Sunday - Thursday, 9 AM - 5 PM</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-4">
+                            <div className="bg-brand-gold/10 p-3 rounded-full text-brand-gold">
+                                <Mail className="w-5 h-5"/>
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-white">Email</h3>
+                                <p className="text-gray-200">
+                                    <a href="mailto:info@laviecosmetics-eg.com" className="hover:text-brand-gold transition-colors">info@laviecosmetics-eg.com</a>
+                                </p>
+                                <p className="text-xs text-gray-400">We reply within 24 hours</p>
+                            </div>
                         </div>
                     </div>
-                     <div className="flex items-start gap-4">
-                        <div className="bg-brand-pink/10 dark:bg-brand-gold/10 p-3 rounded-full text-brand-pink dark:text-brand-gold">
-                            <Phone className="w-5 h-5"/>
-                        </div>
-                        <div>
-                            <h3 className="font-bold dark:text-white">Phone Support</h3>
-                            <p className="text-gray-600 dark:text-gray-400">
-                                <a href="tel:+201097230130" className="hover:text-brand-pink dark:hover:text-brand-gold transition-colors">+20 109 723 0130</a>
-                            </p>
-                            <p className="text-xs text-gray-500">Sunday - Thursday, 9 AM - 5 PM</p>
-                        </div>
-                    </div>
-                     <div className="flex items-start gap-4">
-                        <div className="bg-brand-pink/10 dark:bg-brand-gold/10 p-3 rounded-full text-brand-pink dark:text-brand-gold">
-                            <Mail className="w-5 h-5"/>
-                        </div>
-                        <div>
-                            <h3 className="font-bold dark:text-white">Email</h3>
-                             <p className="text-gray-600 dark:text-gray-400">
-                                <a href="mailto:info@laviecosmetics-eg.com" className="hover:text-brand-pink dark:hover:text-brand-gold transition-colors">info@laviecosmetics-eg.com</a>
-                            </p>
-                             <p className="text-xs text-gray-500">We reply within 24 hours</p>
-                        </div>
-                    </div>
-                 </div>
+                </div>
               </div>
 
             </div>
