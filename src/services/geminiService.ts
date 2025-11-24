@@ -2,8 +2,8 @@
 
 import {
   getHairConsultation as getHairConsultationFlow,
+  type HairConsultationInput,
 } from '@/ai/flows/hair-consultant-flow';
-import { HairConsultationInput } from '@/ai/flows/hair-consultant-flow-schemas';
 
 export async function getHairConsultation(
   history: HairConsultationInput['history']
