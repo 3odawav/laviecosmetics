@@ -41,9 +41,11 @@ export default function LoginPage() {
             <Button type="submit" className="w-full bg-brand-pink text-white hover:bg-brand-pink/90 dark:bg-brand-gold dark:text-black dark:hover:bg-brand-gold/90">
               Login
             </Button>
-            <Button variant="outline" className="w-full dark:bg-zinc-800 dark:text-white dark:hover:bg-zinc-700 dark:border-zinc-700">
-              Login with Google
-            </Button>
+            <Link href="https://myaccount.google.com/?utm_source=sign_in_no_continue&pli=1">
+              <Button variant="outline" className="w-full dark:bg-zinc-800 dark:text-white dark:hover:bg-zinc-700 dark:border-zinc-700">
+                Login with Google
+              </Button>
+            </Link>
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}

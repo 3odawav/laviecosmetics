@@ -41,9 +41,11 @@ export default function SignupPage() {
             <Button type="submit" className="w-full bg-brand-pink text-white hover:bg-brand-pink/90 dark:bg-brand-gold dark:text-black dark:hover:bg-brand-gold/90">
               Create Account
             </Button>
-            <Button variant="outline" className="w-full dark:bg-zinc-800 dark:text-white dark:hover:bg-zinc-700 dark:border-zinc-700">
-              Sign up with Google
-            </Button>
+            <Link href="https://myaccount.google.com/?utm_source=sign_in_no_continue&pli=1">
+              <Button variant="outline" className="w-full dark:bg-zinc-800 dark:text-white dark:hover:bg-zinc-700 dark:border-zinc-700">
+                Sign up with Google
+              </Button>
+            </Link>
           </div>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
