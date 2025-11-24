@@ -9,6 +9,9 @@ const SHOPIFY_ACCESS_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_ACCESS_TOKEN;
 
 interface ShopifyError {
   message: string;
+   extensions?: {
+    code?: string;
+  };
 }
 
 interface ShopifyResponse<T> {
@@ -52,14 +55,16 @@ async function shopifyFetch<T>({
 
     if (result.errors) {
       console.error('Raw Shopify Errors:', JSON.stringify(result.errors, null, 2));
-      const errorMessage = result.errors.map((e: ShopifyError) => e.message || 'Unknown Shopify Error').join(', ');
       
-      if (errorMessage.includes('Invalid API key or access token')) {
+      const isUnauthorized = result.errors.some((e: ShopifyError) => e.extensions?.code === 'UNAUTHORIZED');
+      
+      if (isUnauthorized) {
           throw new Error(
-            'The provided Shopify Storefront Access Token is invalid or expired. Please check your .env.local file and generate a new token from your Shopify Admin if needed.'
+            'The provided Shopify Storefront Access Token is invalid or expired (UNAUTHORIZED). Please check your .env.local file and generate a new token from your Shopify Admin if needed.'
           );
       }
 
+      const errorMessage = result.errors.map((e: ShopifyError) => e.message || 'Unknown Shopify Error').join(', ');
       throw new Error(`Shopify request failed: ${errorMessage}`);
     }
 
