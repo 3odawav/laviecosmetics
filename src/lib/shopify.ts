@@ -1,5 +1,3 @@
-
-'use client';
 // src/lib/shopify.ts
 
 import type { Product } from './types';
