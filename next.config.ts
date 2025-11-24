@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // ❌ تم حذف output: export للسماح بالـ Server Actions والذكاء الاصطناعي
+  // 1. تم حذف output: 'export' (ضروري جداً)
   
   typescript: {
     ignoreBuildErrors: true,
@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    // ✅ تم تفعيل تحسين الصور (حذفنا unoptimized: true)
     remotePatterns: [
       { protocol: 'https', hostname: 'placehold.co' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
@@ -21,8 +20,9 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'www.eand.com.eg' }
     ],
   },
-  // إعدادات تجريبية لحل مشكلة الـ Cross Origin في Project IDX
+  // 2. هذا هو الحل للتحذير الذي أرسلته (للسماح لـ IDX)
   experimental: {
+    allowedDevOrigins: ['*'], // أو يمكنك وضع رابط البريفيو الخاص بـ IDX هنا
     serverActions: {
       allowedOrigins: ['*'], 
     },
