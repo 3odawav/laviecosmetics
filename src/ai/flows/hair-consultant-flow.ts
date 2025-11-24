@@ -282,4 +282,4 @@ const hairConsultantFlow = ai.defineFlow(
     const response = await prompt(input);
     return { response: response.output! };
   }
-);
+)
