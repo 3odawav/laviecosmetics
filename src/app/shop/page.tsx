@@ -45,7 +45,7 @@ export default function ShopPage() {
         <div className="container mx-auto px-4 md:px-8 py-12 text-center">
           <h2 className="text-2xl font-bold text-red-600 mb-4">Failed to load products</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            There was an issue connecting to Shopify. Please ensure your environment variables are set up correctly.
+            There was an issue connecting to your store. Please check your Shopify credentials in the environment variables.
           </p>
           <pre className="text-left bg-gray-100 dark:bg-zinc-900 p-4 rounded-md text-red-500 text-sm overflow-x-auto">
             <code>{error}</code>
@@ -104,15 +104,8 @@ export default function ShopPage() {
             return (
             <div key={product.id} className="group cursor-pointer flex flex-col" onClick={() => handleProductClick(product)}>
               
-              {/* Product Info - Title */}
-               <div className="text-center mb-4">
-                 <h2 className="text-4xl caveat-heading leading-tight min-h-[4rem]">
-                    {pTitlePart1}
-                 </h2>
-               </div>
-              
               {/* Image Container */}
-              <motion.div layoutId={`product-image-${product.id}`} className="relative aspect-[3/4] w-full overflow-hidden rounded-sm bg-zinc-900/5 dark:bg-zinc-900">
+              <motion.div layoutId={`product-image-${product.id}`} className="relative aspect-[3/4] w-full overflow-hidden rounded-sm">
                 <Image
                   src={product.image}
                   alt={product.title}
@@ -121,7 +114,7 @@ export default function ShopPage() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 
-                <Button className="absolute bottom-4 left-4 right-4 bg-brand-gold text-white hover:opacity-90 transition-colors backdrop-blur-sm py-3 px-4 text-sm uppercase tracking-widest font-bold opacity-0 translate-y-4 duration-300 group-hover:opacity-100 group-hover:translate-y-0 shadow-lg shadow-black/20 hover:shadow-xl">
+                <Button className="absolute bottom-4 left-4 right-4 bg-brand-pink text-white hover:opacity-90 transition-colors backdrop-blur-sm py-3 px-4 text-sm uppercase tracking-widest font-bold opacity-0 translate-y-4 duration-300 group-hover:opacity-100 group-hover:translate-y-0 shadow-lg shadow-black/20 hover:shadow-xl">
                   Add to Cart — {product.price.toFixed(2)} EGP
                 </Button>
                 
@@ -137,10 +130,13 @@ export default function ShopPage() {
                 )}
               </motion.div>
 
-              {/* Product Info - Price & Subtitle */}
-              <div className="text-center mt-4">
-                {pTitlePart2 && <p className="font-serif text-lg text-black dark:text-gray-300 mb-1">{pTitlePart2}</p>}
-                <div className="font-bold text-base text-brand-text dark:text-gray-400">
+              {/* Product Info - Title, Subtitle, and Price */}
+              <div className="text-center mt-6">
+                <h2 className="text-3xl caveat-heading leading-tight min-h-[3rem] text-brand-pink dark:text-brand-gold">
+                    {pTitlePart1}
+                </h2>
+                {pTitlePart2 && <p className="font-serif text-lg text-black dark:text-gray-300 mt-1 mb-2">{pTitlePart2}</p>}
+                <div className="font-bold text-base text-brand-text dark:text-gray-400 mt-1">
                   {product.price.toFixed(2)} EGP
                 </div>
               </div>
