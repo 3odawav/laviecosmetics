@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -12,6 +13,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const EGYPTIAN_GOVERNORATES = [
   'Alexandria', 'Aswan', 'Asyut', 'Beheira', 'Beni Suef', 'Cairo', 'Dakahlia', 'Damietta', 'Faiyum', 'Gharbia', 'Giza', 'Ismailia', 'Kafr El Sheikh', 'Luxor', 'Matruh', 'Minya', 'Monufia', 'New Valley', 'North Sinai', 'Port Said', 'Qalyubia', 'Qena', 'Red Sea', 'Sharqia', 'Sohag', 'South Sinai', 'Suez'
@@ -28,16 +30,24 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black pt-20">
-      <main className="container mx-auto px-4 py-12">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-10">
-            <h1 className="text-4xl caveat-heading text-brand-pink dark:text-brand-gold">Shipping Details</h1>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              Please provide your delivery address.
+       <section className="relative w-full h-[40vh] bg-black text-white flex items-center justify-center text-center mb-16">
+          <Image
+            src="https://i.ibb.co/YBJVmfDZ/Untitled-png.png"
+            alt="Shipping Details"
+            fill
+            className="object-cover object-center opacity-30"
+          />
+          <div className="relative z-10 px-4">
+            <h1 className="text-4xl md:text-6xl caveat-heading text-brand-pink dark:text-brand-gold">Shipping Details</h1>
+             <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
+              Please provide your delivery address to proceed.
             </p>
           </div>
+        </section>
 
-          <form onSubmit={handleContinueToPayment} className="space-y-6 bg-gray-50 dark:bg-zinc-900 p-8 rounded-lg">
+      <main className="container mx-auto px-4 pb-12">
+        <div className="max-w-2xl mx-auto -mt-24">
+          <form onSubmit={handleContinueToPayment} className="space-y-6 bg-white dark:bg-zinc-900 p-8 rounded-lg shadow-lg">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="name" className="dark:text-gray-300">Full Name</Label>
